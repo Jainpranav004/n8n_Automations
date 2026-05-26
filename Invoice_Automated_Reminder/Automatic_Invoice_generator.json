@@ -1,0 +1,474 @@
+{
+  "name": "Automatic_Invoice_generator",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1Y-qvkSw-bdjOgU5qFGoZgxILvtnifnIC",
+          "mode": "list",
+          "cachedResultName": "N8n_Practise",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Y-qvkSw-bdjOgU5qFGoZgxILvtnifnIC"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -64
+      ],
+      "id": "68ad570c-2eff-4d90-8b6a-49499d981f5d",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aZWcsTWLNmWPLisk",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -336,
+        -192
+      ],
+      "id": "956751ef-cff3-483d-8500-69fc91e96b84",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aZWcsTWLNmWPLisk",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Client Name",
+              "description": "Name of client",
+              "required": true
+            },
+            {
+              "name": "Client Address",
+              "description": "Address of client",
+              "required": true
+            },
+            {
+              "name": "Client Phone",
+              "description": "Phone number",
+              "required": true
+            },
+            {
+              "name": "Invoice Number",
+              "description": "number of invoice",
+              "required": true
+            },
+            {
+              "name": "Client Email",
+              "description": "Email of client",
+              "required": true
+            },
+            {
+              "name": "Total Amount",
+              "description": "total amount",
+              "required": true
+            },
+            {
+              "name": "Due Date",
+              "type": "date",
+              "description": "due date",
+              "required": true
+            },
+            {
+              "name": "Invoice Date",
+              "type": "date",
+              "description": "invoice date",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        -80
+      ],
+      "id": "b8550467-d682-4b1f-9b66-bfc8802b2cc0",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        0,
+        112
+      ],
+      "id": "81669c07-bbc1-4ef3-b566-d28c17929697",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "uU5MjqRGvOPxluMr",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo",
+          "mode": "list",
+          "cachedResultName": "N8N_Practise",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1877067916,
+          "mode": "list",
+          "cachedResultName": "Invoice_Workflow",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo/edit#gid=1877067916"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice No.": "={{ $json.output['Invoice Number'] }}",
+            "Invoice date": "={{ $json.output['Invoice Date'] }}",
+            "Client name": "={{ $json.output['Client Name'] }}",
+            "Client Email": "={{ $json.output['Client Email'] }}",
+            "Client Address": "={{ $json.output['Client Address'] }}",
+            "Client Phone": "='{{ $json.output['Client Phone'] }}",
+            "Total Amount": "={{ $json.output['Total Amount'] }}",
+            "Due Date": "={{ $json.output['Due Date'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Invoice No.",
+              "displayName": "Invoice No.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Invoice date",
+              "displayName": "Invoice date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client name",
+              "displayName": "Client name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Email",
+              "displayName": "Client Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Address",
+              "displayName": "Client Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Phone",
+              "displayName": "Client Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total Amount",
+              "displayName": "Total Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        384,
+        -80
+      ],
+      "id": "0c815a57-9708-408b-a49e-01b04383cbdd",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "unPYpZgyOsz088xl",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -176,
+        -80
+      ],
+      "id": "ed696a13-5dd6-4069-b3bd-5d2a66c7c42b",
+      "name": "Download Binary"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        496,
+        128
+      ],
+      "id": "5f9fb89f-28f6-47ed-adc7-74ea648b872b",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "uU5MjqRGvOPxluMr",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Append row in sheet').item.json['Client Email'] }}",
+        "subject": "=Invoice Reminder for Invoice No.  {{ $('Append row in sheet').item.json['Invoice No.'] }} with due date {{ $('Append row in sheet').item.json['Due Date'] }}",
+        "emailType": "text",
+        "message": "={{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        -112
+      ],
+      "id": "44157253-08e4-4172-bb0b-1660bed1a279",
+      "name": "Send a message",
+      "webhookId": "d5fd1c24-fa51-4bf7-8485-9455b01fa3f9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nBw1RYsQZVFWJJDX",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an invoice email using these details:\n\nInvoice Number: {{ $json[\"Invoice No.\"] }}\nInvoice Date: {{ $json[\"Invoice date\"] }}\nClient Name: {{ $json[\"Client name\"] }}\nClient Email: {{ $json[\"Client Email\"] }}\nClient Address: {{ $json[\"Client Address\"] }}\nClient Phone: {{ $json[\"Client Phone\"] }}\nTotal Amount: {{ $json[\"Total Amount\"] }}\nDue Date: {{ $json[\"Due Date\"] }}\n\nGenerate:\n1. Email Body",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are an expert finance and client communication assistant.  Generate highly professional, concise, natural, and humanized invoice reminder emails that feel genuinely written by a real person.  Rules:  * Do NOT say things like:   \"Here is your email\"   \"Below is the email\"   \"Here’s a professional email\" * Generate ONLY the direct email body message. * Do NOT generate subject lines. * Do NOT return JSON. * Tone should feel warm, modern, confident, and human. * Avoid robotic or overly formal AI language. * Mention:    * Invoice number   * Total amount   * Due date * Keep it concise and readable. * Make the email feel business-professional but personal. * Remove the client's phone number from the email completely. * Do not use unnecessary formatting or explanations. * End every email with:  Best Regards, TechiesHub"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        560,
+        -80
+      ],
+      "id": "d2c8cf67-a51d-4bd0-8173-d490fdec39cc",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"subject\": {\n      \"type\": \"string\"\n    },\n    \"body\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\"subject\", \"body\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        672,
+        128
+      ],
+      "id": "5c4cf779-50bf-4a5c-b19b-8642c51da53d",
+      "name": "Structured Output Parser1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Download Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Binary": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "afbe8bc4-2b79-46ae-b09a-5f0d67e4efa1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "130557e616030cc5c4c4ae0078ddbf787eaa8927fdf2c6034318263ac98c4fb5"
+  },
+  "id": "qHp24cJjl4inui1G",
+  "tags": []
+}
