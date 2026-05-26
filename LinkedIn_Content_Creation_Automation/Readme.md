@@ -83,7 +83,7 @@ Update Google Sheets
 # 🖼️ Workflow Screenshot
 
 ```md
-![alt text](image.png)
+![Workflow](./assets/workflow.png)
 ```
 
 ---
@@ -312,4 +312,3 @@ If you like this project:
 <p align="center">
   Made with ❤️ using n8n + AI
 </p>
-
