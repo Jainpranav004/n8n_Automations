@@ -77,18 +77,13 @@ AI Agent (LLM)
       ↓
 Update Google Sheets
 ```
-
 ---
 
-# 🖼️ Workflow Screenshot
-
-```md
 # 🖼️ Workflow Screenshot
 
 <p align="center">
   <img src="./image.png" width="100%" />
 </p>
-```
 
 ---
 
