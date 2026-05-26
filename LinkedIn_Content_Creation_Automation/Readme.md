@@ -83,7 +83,9 @@ Update Google Sheets
 # 🖼️ Workflow Screenshot
 
 ```md
-![alt text](image-1.png)
+# 🖼️ Workflow Screenshot
+
+![Workflow Screenshot](./image-1.png)
 ```
 
 ---
