@@ -85,7 +85,9 @@ Update Google Sheets
 ```md
 # 🖼️ Workflow Screenshot
 
-![Workflow Screenshot](./image-1.png)
+<p align="center">
+  <img src="./image.png" width="100%" />
+</p>
 ```
 
 ---
