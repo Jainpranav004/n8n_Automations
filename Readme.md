@@ -181,7 +181,9 @@ Action Node	Performs task
 Logic Node	Conditions/loops
 API Node	Connect external APIs
 Database Node	Store/retrieve data
-🏗️ Architecture Overview
+# 🏗️ Architecture Overview
+
+```text
                 ┌─────────────────┐
                 │  Trigger/Event  │
                 └────────┬────────┘
@@ -196,112 +198,227 @@ Database Node	Store/retrieve data
  ┌──────────┐      ┌──────────┐      ┌──────────┐
  │ Database │      │ APIs     │      │ AI Tools │
  └──────────┘      └──────────┘      └──────────┘
-📋 Prerequisites
+```
 
-Before installing n8n locally:
+---
 
-Required Software
-Docker
-Docker Compose (optional but recommended)
-Recommended System
-Requirement	Minimum
-RAM	4 GB
-CPU	Dual Core
-Storage	10 GB
-🐳 Installing Docker
-🪟 Windows Installation
-Step 1 — Download Docker Desktop
+# 📖 Example Workflow
 
-Visit:
+```text
+New Form Submission
+        ↓
+Store in Database
+        ↓
+Send Slack Notification
+        ↓
+Generate AI Summary
+        ↓
+Send Email Reply
+```
 
-https://www.docker.com/products/docker-desktop/
-Step 2 — Install Docker Desktop
-Run installer
-Enable WSL2 when asked
-Restart system
-Step 3 — Verify Installation
+---
 
-Open terminal:
+# 🧠 AI Resume Screening Workflow
 
+```text
+Resume Upload
+     ↓
+Extract PDF Text
+     ↓
+OpenAI Analysis
+     ↓
+Candidate Scoring
+     ↓
+Slack Notification
+```
+
+---
+
+# 🧾 Invoice Automation Workflow
+
+```text
+Invoice Upload
+      ↓
+OCR Extraction
+      ↓
+Excel Entry
+      ↓
+Due Date Tracking
+      ↓
+Reminder Email
+```
+
+---
+
+# 📲 Social Media Automation Workflow
+
+```text
+New Blog Published
+       ↓
+Generate Caption
+       ↓
+Post to LinkedIn
+       ↓
+Post to Twitter
+```
+
+---
+
+# 🐳 Docker Installation Commands
+
+## Windows
+
+### Verify Docker Installation
+
+```bash
 docker --version
+```
 
-Expected output:
+### Verify Docker Compose
 
-Docker version 27.x.x
-
-Check Docker Compose:
-
+```bash
 docker compose version
-🐧 Ubuntu/Linux Installation
-Update Packages
+```
+
+---
+
+## Ubuntu/Linux
+
+### Update Packages
+
+```bash
 sudo apt update
-Install Docker
+```
+
+### Install Docker
+
+```bash
 sudo apt install docker.io -y
-Start Docker
+```
+
+### Start Docker
+
+```bash
 sudo systemctl start docker
-Enable Docker on Boot
+```
+
+### Enable Docker on Boot
+
+```bash
 sudo systemctl enable docker
-Verify Installation
+```
+
+### Verify Docker
+
+```bash
 docker --version
-🚀 Running n8n Locally Using Docker
-Method 1 — Quick Start (Recommended for Beginners)
-Step 1 — Pull n8n Docker Image
+```
+
+---
+
+# 🚀 Running n8n Using Docker
+
+## Pull n8n Image
+
+```bash
 docker pull n8nio/n8n
-Step 2 — Run n8n Container
+```
+
+---
+
+## Run n8n Container
+
+```bash
 docker run -it --rm \
 -p 5678:5678 \
 n8nio/n8n
-Step 3 — Open n8n
+```
 
-Open browser:
+---
 
+## Open n8n Dashboard
+
+```text
 http://localhost:5678
+```
 
-You should now see the n8n dashboard.
+---
 
-📦 Docker Command Breakdown
+# 📦 Docker Command Breakdown
+
+```bash
 docker run -it --rm -p 5678:5678 n8nio/n8n
-Command	Meaning
-docker run	Start container
--it	Interactive terminal
---rm	Remove container after stop
--p 5678:5678	Map local port
-n8nio/n8n	Official n8n image
-💾 Persistent Data Storage
+```
 
-Without persistence, data is lost after container removal.
+| Command | Meaning |
+|---|---|
+| `docker run` | Starts container |
+| `-it` | Interactive mode |
+| `--rm` | Removes container after stop |
+| `-p 5678:5678` | Port mapping |
+| `n8nio/n8n` | Official image |
 
-Use volumes.
+---
 
-Create Docker Volume
+# 💾 Persistent Storage
+
+## Create Docker Volume
+
+```bash
 docker volume create n8n_data
-Run n8n with Persistent Storage
+```
+
+---
+
+## Run with Persistent Storage
+
+```bash
 docker run -it --rm \
 -p 5678:5678 \
 -v n8n_data:/home/node/.n8n \
 n8nio/n8n
-📁 Local Folder Persistence
+```
 
-Instead of Docker volumes:
+---
 
-Windows
+# 📁 Local Folder Persistence
+
+## Windows
+
+```bash
 docker run -it --rm ^
 -p 5678:5678 ^
 -v C:\n8n-data:/home/node/.n8n ^
 n8nio/n8n
-Linux/Mac
+```
+
+---
+
+## Linux/Mac
+
+```bash
 docker run -it --rm \
 -p 5678:5678 \
 -v ~/.n8n:/home/node/.n8n \
 n8nio/n8n
-🧩 Using Docker Compose (Production Recommended)
+```
 
-Docker Compose makes management easier.
+---
 
-Step 1 — Create Project Folder
+# 🧩 Docker Compose Setup
+
+## Create Project Directory
+
+```bash
 mkdir n8n-docker
 cd n8n-docker
-Step 2 — Create docker-compose.yml
+```
+
+---
+
+## Create `docker-compose.yml`
+
+```yaml
 version: '3.8'
 
 services:
@@ -322,180 +439,252 @@ services:
       - ./n8n_data:/home/node/.n8n
 
     restart: always
-Step 3 — Start n8n
+```
+
+---
+
+## Start n8n
+
+```bash
 docker compose up -d
-Step 4 — Verify Running Containers
+```
+
+---
+
+## Check Running Containers
+
+```bash
 docker ps
+```
 
-Expected:
+---
 
-CONTAINER ID   IMAGE         STATUS
-xxxxxxxxxxxx   n8nio/n8n    Up
-Step 5 — Open Browser
+## Open Browser
+
+```text
 http://localhost:5678
+```
 
-Login credentials:
+---
 
+# 🔐 Login Credentials
+
+```text
 Username: admin
 Password: admin123
-🔐 Environment Variables
-Variable	Purpose
-TZ	Timezone
-N8N_BASIC_AUTH_ACTIVE	Enable login
-N8N_BASIC_AUTH_USER	Username
-N8N_BASIC_AUTH_PASSWORD	Password
-WEBHOOK_URL	Public webhook URL
-N8N_HOST	Hostname
-N8N_PORT	Port
-🔄 Updating n8n
-Pull Latest Image
+```
+
+---
+
+# 🔄 Updating n8n
+
+## Pull Latest Image
+
+```bash
 docker pull n8nio/n8n
-Stop Existing Container
+```
+
+---
+
+## Stop Existing Containers
+
+```bash
 docker compose down
-Restart with Latest Version
+```
+
+---
+
+## Restart Containers
+
+```bash
 docker compose up -d
-🛑 Stopping & Removing Containers
-Stop Container
+```
+
+---
+
+# 🛑 Stop & Remove Containers
+
+## Stop Container
+
+```bash
 docker stop n8n
-Remove Container
+```
+
+---
+
+## Remove Container
+
+```bash
 docker rm n8n
-Remove Docker Volume
+```
 
-⚠️ Warning: Deletes workflow data permanently.
+---
 
+## Remove Docker Volume
+
+⚠️ Warning: Deletes all workflow data permanently.
+
+```bash
 docker volume rm n8n_data
-🧪 Common Issues & Fixes
-❌ Port Already in Use
+```
+
+---
+
+# 🧪 Common Issues & Fixes
+
+## ❌ Port Already in Use
 
 Error:
 
+```bash
 Bind for 0.0.0.0:5678 failed
+```
 
 Fix:
 
-Use different port.
-
+```bash
 -p 8080:5678
+```
 
-Then open:
+Open:
 
+```text
 http://localhost:8080
-❌ Docker Permission Denied (Linux)
+```
 
-Fix:
+---
 
+## ❌ Docker Permission Denied
+
+```bash
 sudo usermod -aG docker $USER
+```
 
-Restart terminal.
+Restart terminal afterward.
 
-❌ Container Keeps Restarting
+---
+
+## ❌ Container Restart Loop
 
 Check logs:
 
+```bash
 docker logs n8n
-❌ Cannot Access UI
+```
 
-Check running containers:
+---
 
+## ❌ Cannot Access UI
+
+Check containers:
+
+```bash
 docker ps
+```
 
-Ensure firewall allows port.
+---
 
-🔒 Security Best Practices
-✅ Always Enable Authentication
+# 🔒 Security Best Practices
 
-Never expose public n8n without login protection.
+## Enable Authentication
 
-✅ Use HTTPS in Production
+Never expose public n8n without authentication.
 
-Recommended:
+---
 
-Nginx
-Traefik
-Cloudflare Tunnel
-✅ Backup Workflows
+## Use HTTPS
 
-Backup:
+Recommended options:
 
+- Nginx
+- Traefik
+- Cloudflare Tunnel
+
+---
+
+## Backup Important Data
+
+Backup folder:
+
+```text
 /home/node/.n8n
-✅ Use Environment Variables
+```
 
-Avoid hardcoding secrets inside workflows.
+---
 
-🔗 Useful Integrations
-Category	Examples
-Communication	Slack, Discord, Telegram
-Databases	MySQL, PostgreSQL, MongoDB
-Cloud	AWS, GCP, Azure
-Productivity	Notion, Airtable, Sheets
-AI	OpenAI, Anthropic, LangChain
-DevOps	GitHub, GitLab, Jenkins
-🧠 Example Workflow Ideas
-AI Resume Screening System
-Resume Upload
-     ↓
-Extract PDF Text
-     ↓
-OpenAI Analysis
-     ↓
-Candidate Scoring
-     ↓
-Slack Notification
-Invoice Automation
-Invoice Upload
-      ↓
-OCR Extraction
-      ↓
-Excel Entry
-      ↓
-Due Date Tracking
-      ↓
-Reminder Email
-Social Media Automation
-New Blog Published
-       ↓
-Generate Caption
-       ↓
-Post to LinkedIn
-       ↓
-Post to Twitter
-📚 Learning Resources
-Official Documentation
+## Use Environment Variables
+
+Avoid hardcoding secrets directly in workflows.
+
+---
+
+# 🔗 Useful Links
+
+## Official Documentation
+
+```text
 https://docs.n8n.io/
-Official Website
-https://n8n.io/
-GitHub Repository
-https://github.com/n8n-io/n8n
-Community Forum
-https://community.n8n.io/
-🏁 Conclusion
+```
 
-n8n is one of the most powerful workflow automation platforms available today.
+---
+
+## Official Website
+
+```text
+https://n8n.io/
+```
+
+---
+
+## GitHub Repository
+
+```text
+https://github.com/n8n-io/n8n
+```
+
+---
+
+## Community Forum
+
+```text
+https://community.n8n.io/
+```
+
+---
+
+# 🏁 Conclusion
+
+n8n is one of the most powerful automation platforms available today.
 
 It combines:
 
-✅ No-code simplicity
-✅ Developer flexibility
-✅ AI capabilities
-✅ Self-hosting freedom
-✅ Enterprise-grade automation
+- ✅ No-code simplicity
+- ✅ Developer flexibility
+- ✅ AI capabilities
+- ✅ Self-hosting freedom
+- ✅ Enterprise-grade automation
 
-Whether you are:
+Perfect for:
 
-A developer
-Startup founder
-AI engineer
-Automation enthusiast
-Enterprise team
+- Developers
+- Startups
+- AI Engineers
+- Automation Enthusiasts
+- Enterprises
 
-n8n can significantly improve productivity and reduce repetitive work.
+---
 
-⭐ Support n8n
+# ⭐ Support n8n
 
 If you like n8n:
 
-Star the GitHub repository
-Contribute workflows
-Join the community
-Build amazing automations 🚀
-<p align="center"> Made with ❤️ using n8n Automation </p> ```
+- ⭐ Star the GitHub repository
+- 🤝 Contribute workflows
+- 💬 Join the community
+- 🚀 Build amazing automations
+
+---
+
+<p align="center">
+  Made with ❤️ using n8n Automation
+</p>
