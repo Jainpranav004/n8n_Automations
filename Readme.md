@@ -1080,5 +1080,5 @@ If you like n8n:
 ---
 
 <p align="center">
-  Made with ❤️ using n8n Automation
+  Made with ❤️ - Pranav Jain
 </p>
