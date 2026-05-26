@@ -1,0 +1,465 @@
+{
+  "name": "Gmail_Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "571257da-494c-49a7-8404-3b28cc566cbd",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1PkKTNMdO7VaCZUsd6rPqBJWud8cS3fzL24vRgD1miyw",
+          "mode": "list",
+          "cachedResultName": "Leads Details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PkKTNMdO7VaCZUsd6rPqBJWud8cS3fzL24vRgD1miyw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PkKTNMdO7VaCZUsd6rPqBJWud8cS3fzL24vRgD1miyw/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        96,
+        0
+      ],
+      "id": "65b3c37c-bb99-4a40-9da6-b3c1d5560a38",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "unPYpZgyOsz088xl",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet').item.json.Email }}",
+        "subject": "=Exploring Software Engineering Internship Opportunities at {{ $('Get row(s) in sheet').item.json.Company }}",
+        "emailType": "text",
+        "message": "={{ $('Code in JavaScript').item.json.body }}",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          },
+          "senderName": "Pranav Jain"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1680,
+        -16
+      ],
+      "id": "3b1d6465-2537-47d8-bcfe-bf7c8e94c4a0",
+      "name": "Send a message",
+      "webhookId": "7b4035f7-639a-405a-a69f-121fcb858f11",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zT5crrYLhN4Lg9BV",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "https://drive.google.com/filehttps://drive.google.com/file/d/1KShm97s9YoIU0wuNueYhF21dJY_gi1LU/view?usp=sharing/d/1jbbOnwj2ohQFu6ucsn6tVmBa8y0FGJVg/view?usp=drive_link",
+          "mode": "url"
+        },
+        "options": {
+          "fileName": "Pranav_Jain_resume"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1456,
+        -112
+      ],
+      "id": "3e5332a4-ed25-4a4b-8ea3-6ce273bd75a2",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aZWcsTWLNmWPLisk",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an elite internship outreach email writer specializing in highly humanized, technically strong, concise, and recruiter-friendly cold emails for Software Engineering, AI/ML, Full-Stack, Backend, and Automation internship opportunities.\n\nYour job is to generate internship outreach emails that feel genuinely written by an ambitious engineering student entering the tech industry — NOT like an AI-generated HR template, SOP, essay, or LinkedIn post.\n\nThe final email MUST visually resemble a real professional cold email sent manually by a student to recruiters.\n\nCANDIDATE DETAILS:\nName: Pranav Jain\nEducation: Pre-final year B.Tech CSE student at Galgotias University\nCGPA: 9.3\n\nTECHNICAL BACKGROUND:\n\nJava , React, Node.js, Python, SQL, Docker, AI/ML systems, RAG & LLM applications, n8n automation workflows, DSA/problem-solving and core Computer science concepts.\n\nEXPERIENCE:\nWorked on multiple projects across web development, AI/ML, automation applications with strong interest in building practical real-world solutions.\n\nACHIEVEMENTS:\nRecognized as Best Performer during Campus Ambassador internship with strong communication, collaboration, and leadership skills.\n\nVERY IMPORTANT WRITING STYLE:\n- Human and natural\n- Professional but energetic\n- Technically impressive without sounding like a resume dump\n- Slightly enthusiastic and emotionally warm\n- Confident but humble\n- Conversational and smooth\n- Modern startup/corporate tone\n- Should feel like a real ambitious student personally reaching out\n- MUST NOT sound robotic, generic, repetitive, overly polished, or AI-generated\n\nSTRICT EMAIL FORMAT:\n- Start ONLY with:\nGreetings Hiring Team,\n\n- After greeting, leave ONE blank line\n\n- Write ONLY 3 short paragraphs\n- Each paragraph should contain 2–4 naturally flowing sentences\n- Keep paragraph spacing exactly like a real email\n- DO NOT break every sentence into separate lines\n- DO NOT create giant text blocks\n- DO NOT create overly compact/congested paragraphs\n- Maintain comfortable visual spacing and readability\n- Email should be easily skimmable in 5–10 seconds\n\n- After the 3 paragraphs, leave ONE blank line\n\n- End ONLY with:\nThank you for your time and consideration.\n\nCONTENT REQUIREMENTS:\n- Strong and engaging introduction\n- Naturally mention university name and CGPA\n- Mention technical strengths naturally inside sentences\n- Mention experience across web development, AI/ML, and automation projects naturally\n- Subtly communicate curiosity, ownership mindset, adaptability, and eagerness to contribute\n- Include one strong line that makes the recruiter feel the candidate can become a valuable contributor\n- Mention resume attached naturally\n- Keep the tone authentic and realistic\n\nVERY IMPORTANT:\nAVOID phrases like:\n- \"dynamic environment\"\n- \"esteemed organization\"\n- \"I am writing to express\"\n- \"I would be grateful\"\n- \"I look forward to hearing from you\"\n- \"passionate individual\"\n- \"thrilled to apply\"\n\nDO NOT:\n- sound desperate\n- over-explain\n- repeat the same ideas\n- make paragraphs too dense\n- make output look like an essay\n- add signatures\n- add LinkedIn/GitHub\n- add placeholders\n\nIDEAL OUTPUT FEEL:\n- Clean like a real recruiter email\n- Slightly personalized\n- Add this : \n- Sharp and modern\n- Human-written\n- Technically capable\n- Easy to skim\n- Natural paragraph formatting\n\nLENGTH:\n140–180 words maximum\n\nOUTPUT RULES:\n\n- No markdown\n- No bullet points\n- No Subject:\n- Return ONLY the final email body text",
+        "batching": {
+          "batchSize": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        880,
+        -112
+      ],
+      "id": "ed1d1713-df24-4fd6-8f00-3a426fd477ce",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "maxTokensToSample": null,
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        880,
+        160
+      ],
+      "id": "62d57f6d-fb9d-4acc-a252-c85dfe26f4b4",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "uU5MjqRGvOPxluMr",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json.text;\n\nreturn [\n  {\n    json: {\n      body: response,\n      row_number: $('Get row(s) in sheet').first().json.row_number\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        -144
+      ],
+      "id": "2528fd1b-199c-4185-baa0-7d878311a7c3",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        352,
+        16
+      ],
+      "id": "60c30d12-87c3-430f-a7dd-0011741490cf",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": "=5"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        32
+      ],
+      "id": "e64241e5-91c8-421b-91f3-7b3843fc20e4",
+      "name": "Wait",
+      "webhookId": "cbcc22a4-cd5f-47cc-b71e-7cf216e110be"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1PkKTNMdO7VaCZUsd6rPqBJWud8cS3fzL24vRgD1miyw",
+          "mode": "list",
+          "cachedResultName": "Leads Details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PkKTNMdO7VaCZUsd6rPqBJWud8cS3fzL24vRgD1miyw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PkKTNMdO7VaCZUsd6rPqBJWud8cS3fzL24vRgD1miyw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Code in JavaScript').item.json.row_number }}",
+            "status": "Sent"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "threadId",
+              "displayName": "threadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "labelIds",
+              "displayName": "labelIds",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1888,
+        -16
+      ],
+      "id": "edeaf091-85c2-418a-b08a-c7370406fcb0",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "unPYpZgyOsz088xl",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "31394306-6aca-4084-93a2-141798b078fa",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "130557e616030cc5c4c4ae0078ddbf787eaa8927fdf2c6034318263ac98c4fb5"
+  },
+  "id": "iocMCsJ0RhvficZJ",
+  "tags": []
+}
