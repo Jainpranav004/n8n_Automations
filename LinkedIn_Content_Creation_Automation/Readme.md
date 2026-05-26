@@ -83,7 +83,7 @@ Update Google Sheets
 # 🖼️ Workflow Screenshot
 
 ```md
-![Workflow](LinkedIn_Content_Creation_Automation/image.png)
+![alt text](image-1.png)
 ```
 
 ---
