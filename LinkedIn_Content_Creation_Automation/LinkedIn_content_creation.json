@@ -1,0 +1,318 @@
+{
+  "name": "LinkedIn_content_creation",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -144
+      ],
+      "id": "d1f66fe0-2b9a-4977-84f1-d84c2c9bbcc2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -352,
+        64
+      ],
+      "id": "02f07347-0024-4c11-ad29-95c4848d772e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo",
+          "mode": "list",
+          "cachedResultName": "N8N_Practise",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "ToDo"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -112,
+        -144
+      ],
+      "id": "acb9432d-90cf-4bd1-a406-4dc23578fc86",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "unPYpZgyOsz088xl",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"Search on web for {{ $json.topic }} \",\n  \"search_depth\": \"basic\",\n  \"chunks_per_source\": 3,\n  \"max_results\": 2,\n  \"topic\": \"general\",\n  \"time_range\": null,\n  \"start_date\": \"2025-02-09\",\n  \"end_date\": \"2025-12-29\",\n  \"include_answer\": false,\n  \"include_raw_content\": false,\n  \"include_images\": false,\n  \"include_image_descriptions\": false,\n  \"include_favicon\": false,\n  \"include_domains\": [],\n  \"exclude_domains\": [],\n  \"country\": null,\n  \"auto_parameters\": false,\n  \"exact_match\": false,\n  \"include_usage\": false,\n  \"safe_search\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        80,
+        -144
+      ],
+      "id": "a4fa254c-46ea-45c4-93b6-1435f5fe7e26",
+      "name": "Tavily_request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Article 1: {{ $json.results[0].content }}\nArticle 2 : {{ $json.results[1].content }}",
+        "options": {
+          "systemMessage": "You are an expert LinkedIn ghostwriter.\n\nTask: Convert 2–3 user-provided articles into ONE engaging LinkedIn post.\n\nGoals:\n\nHumanized\nInsightful\nConcise\nProfessional but conversational\nMax 250 words\nOptimized for engagement\n\nWriting Style:\n\nNatural and authentic\nSmart but simple\nCreator/founder mindset\nInsight-driven, not summary-driven\nMix short + medium sentences\nLight emotional tone when relevant\n\nStructure:\n\nStrong hook\nKey combined insights from all articles\nThoughtful takeaway/opinion\nOptional reflective ending/question\n4–8 relevant hashtags\n\nRules:\n\nDo NOT summarize articles separately\nDo NOT mention article names/sources\nDo NOT copy text directly\nSynthesize ideas naturally\nAvoid robotic AI tone\nAvoid jargon and clichés\nAvoid “In today’s world…”, “revolutionizing”, etc.\nAvoid excessive emojis\n\nFocus on:\n\nTrends\nPatterns\nContradictions\nFuture implications\nReal-world impact\nBuilder/entrepreneur perspective\n\nOutput:\nReturn ONLY the final LinkedIn post with hashtags."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        288,
+        -144
+      ],
+      "id": "0185a5e7-fdec-4c38-9174-d8d1c467ab42",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        160,
+        64
+      ],
+      "id": "65309be4-1ac1-46c9-9dd1-627411d0fa41",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "uU5MjqRGvOPxluMr",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo",
+          "mode": "list",
+          "cachedResultName": "N8N_Practise",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PReOtgYZQEUDfdKh7JJzi2CBIaw079_WrsvAZgCwnKo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "topic": "={{ $('Get row(s) in sheet').item.json.topic }}",
+            "status": "Created",
+            "Post Content": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "topic"
+          ],
+          "schema": [
+            {
+              "id": "topic",
+              "displayName": "topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post Content",
+              "displayName": "Post Content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        640,
+        -144
+      ],
+      "id": "491ea88e-f62e-4e66-8143-4843826e539c",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "unPYpZgyOsz088xl",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "**Linkedin Post Generator**\n\n \n",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        -272
+      ],
+      "typeVersion": 1,
+      "id": "be006a48-4b11-4aaa-b5e8-9024ead2430f",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Tavily_request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily_request": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ce14faf1-685a-4759-b504-7651c73b353e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "130557e616030cc5c4c4ae0078ddbf787eaa8927fdf2c6034318263ac98c4fb5"
+  },
+  "id": "PPxyKA6oKMovxMnV",
+  "tags": []
+}
