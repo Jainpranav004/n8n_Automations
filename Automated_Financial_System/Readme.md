@@ -201,6 +201,8 @@ Converts generated reports into downloadable PDF documents.
 
 Automatically emails generated financial reports to clients.
 
+![alt text](image.png)
+
 Example email includes:
 
 - PDF attachment
@@ -352,18 +354,6 @@ Status Updated
 - OCR invoice integration
 - Auto payment tracking
 
----
-
-# 🤝 Contributing
-
-Contributions are welcome.
-
-Feel free to:
-
-- Improve workflows
-- Add integrations
-- Optimize prompts
-- Enhance automation logic
 
 ---
 

@@ -154,11 +154,8 @@ Responsibilities:
 
 Stores invoice details into Google Sheets automatically.
 
-Example:
+![alt text](image2.png)
 
-| Invoice ID | Client | Due Date | Status |
-|---|---|---|---|
-| INV-101 | ABC Ltd | 10 Jun | Pending |
 
 ---
 
