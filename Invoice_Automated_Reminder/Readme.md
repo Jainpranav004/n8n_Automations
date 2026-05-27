@@ -40,6 +40,8 @@ Handling invoices manually becomes difficult as invoice volume increases.
 
 This workflow automates the complete invoice management pipeline.
 
+![alt text](image4.png)
+
 ```text
 Invoice Uploaded to Drive
             ↓

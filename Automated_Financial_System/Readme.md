@@ -79,6 +79,8 @@ This reduces manual effort and speeds up financial reporting significantly.
 
 # 🏗️ Workflow Architecture
 
+![alt text](image4.png)
+
 ```text
 Google Drive Trigger
         ↓

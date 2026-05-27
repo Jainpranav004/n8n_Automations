@@ -41,6 +41,8 @@ Manual workflows reduce productivity and scalability.
 
 This workflow automates the entire email pipeline.
 
+![alt text](image2.png)
+
 ```text
 Google Sheets
       ↓
@@ -211,6 +213,9 @@ Downloads required files or attachments before sending emails.
 ## 📧 Send Gmail Message
 
 Sends generated emails automatically using Gmail integration.
+
+![alt text](image.png)
+
 
 ---
 

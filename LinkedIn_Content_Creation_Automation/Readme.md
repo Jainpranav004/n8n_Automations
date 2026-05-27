@@ -279,33 +279,9 @@ Content Stored in Sheet
 
 ---
 
-# 🤝 Contributing
-
-Contributions are welcome.
-
-Feel free to:
-
-- Fork the repository
-- Improve workflows
-- Add integrations
-- Optimize prompts
-
----
-
 # 📜 License
 
 This project is licensed under the MIT License.
-
----
-
-# ⭐ Support
-
-If you like this project:
-
-- ⭐ Star the repository
-- 🍴 Fork the project
-- 🚀 Build amazing automations
-
 ---
 
 <p align="center">
