@@ -89,11 +89,9 @@ Send Gmail Reminder
 
 ---
 
-# 🖼️ Workflow Screenshot
+# 🖼️ Workflow 
 
-<p align="center">
-  <img src="./workflow.png" width="100%" />
-</p>
+![alt text](image.png)
 
 ---
 
