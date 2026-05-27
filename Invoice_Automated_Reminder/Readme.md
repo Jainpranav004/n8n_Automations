@@ -127,7 +127,7 @@ Downloads invoice files from Google Drive.
 
 Extracts invoice text and data from uploaded PDFs.
 
-![alt text](image2.png)
+![alt text](image3.png)
 
 Example extracted fields:
 

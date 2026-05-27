@@ -81,9 +81,7 @@ Update Google Sheets
 
 # 🖼️ Workflow Screenshot
 
-<p align="center">
-  <img src="./image.png" width="100%" />
-</p>
+![alt text](image.png)
 
 ---
 
@@ -150,6 +148,8 @@ Acts as the LLM backend for fast AI inference and content generation.
 ## 📤 Update Row in Sheet
 
 Stores generated LinkedIn content back into Google Sheets automatically.
+
+![alt text](image3.png)
 
 ---
 
