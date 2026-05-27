@@ -134,6 +134,8 @@ Automatically detects uploaded Excel financial reports.
 
 Downloads XLSX financial sheets from Google Drive.
 
+![alt text](image2.png)
+
 ---
 
 ## 📊 Extract From XLSX
@@ -201,7 +203,7 @@ Converts generated reports into downloadable PDF documents.
 
 Automatically emails generated financial reports to clients.
 
-![alt text](image.png)
+![alt text](image3.png)
 
 Example email includes:
 
