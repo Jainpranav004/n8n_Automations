@@ -127,6 +127,8 @@ Downloads invoice files from Google Drive.
 
 Extracts invoice text and data from uploaded PDFs.
 
+![alt text](image2.png)
+
 Example extracted fields:
 
 - Invoice number
@@ -154,9 +156,6 @@ Responsibilities:
 
 Stores invoice details into Google Sheets automatically.
 
-![alt text](image2.png)
-
-
 ---
 
 ## 🧠 Basic LLM Chain
@@ -168,6 +167,8 @@ Generates professional payment reminder emails dynamically.
 ## 📧 Send Gmail Message
 
 Automatically sends reminder emails to clients before or on due date.
+
+![alt text](image2.png)
 
 ---
 
