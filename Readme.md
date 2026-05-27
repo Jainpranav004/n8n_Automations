@@ -10,32 +10,6 @@
 
 ---
 
-# 📌 Table of Contents
-
-- [What is n8n?](#-what-is-n8n)
-- [Why n8n?](#-why-n8n)
-- [Core Features](#-core-features)
-- [Benefits of Using n8n](#-benefits-of-using-n8n)
-- [Real-World Use Cases](#-real-world-use-cases)
-- [How n8n Works](#-how-n8n-works)
-- [Architecture Overview](#-architecture-overview)
-- [Prerequisites](#-prerequisites)
-- [Installing Docker](#-installing-docker)
-- [Running n8n Locally Using Docker](#-running-n8n-locally-using-docker)
-- [Docker Commands Explained](#-docker-commands-explained)
-- [Persistent Data Storage](#-persistent-data-storage)
-- [Using Docker Compose](#-using-docker-compose)
-- [Environment Variables](#-environment-variables)
-- [Updating n8n](#-updating-n8n)
-- [Stopping & Removing Containers](#-stopping--removing-containers)
-- [Common Issues & Fixes](#-common-issues--fixes)
-- [Security Best Practices](#-security-best-practices)
-- [Useful Integrations](#-useful-integrations)
-- [Learning Resources](#-learning-resources)
-- [Conclusion](#-conclusion)
-
----
-
 # 📖 What is n8n?
 
 **n8n** (pronounced *“n-eight-n”*) is an open-source workflow automation platform that allows developers, businesses, and teams to automate repetitive tasks by connecting different applications and services together.
